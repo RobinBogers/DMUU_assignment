@@ -1,6 +1,8 @@
 import numpy as np
 import scipy.stats as stats
 
+np.set_printoptions(suppress=True)
+
 """
 TODo:
 Afronden
@@ -50,6 +52,6 @@ for i in range(10):
     CR_i_new=(s+k-c_i_new)/(s+k-r)
 
     #Tabulation of new data
-    New_table=np.column_stack((Supplier,p_i_new,y_i_new,c_i_new,c_i_eff_new,CR_i_new,Exp_R_i_new,Var_R_i_new))
+    New_table=np.column_stack((Supplier.round(0),p_i_new.round(2),y_i_new.round(2),c_i_new.round(1),c_i_eff_new.round(1),CR_i_new.round(2),Exp_R_i_new.round(2),Var_R_i_new.round(2)))
     print(f"Instance number: {i+1}, Seed: {seeds[i]}, mu: {mu:.2f}, sigma: {sigma:.2f}, coefficient of variation: {v:.2f}")
     print(New_table)
