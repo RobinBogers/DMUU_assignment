@@ -1,8 +1,16 @@
 import numpy as np
 import scipy.stats as stats
 
+"""
+TODo:
+Afronden
+Tables outputen
+"""
+
+
 
 # Given data
+Supplier=np.array([1,2,3,4,5,6,7,8,9,10])
 p_i=np.array([0.05,0.25,0.15,0.10,0.20,0.08,0.12,0.04,0.17,0.22])
 y_i=np.array([0.80,0.40,0.50,0.70,0.40,0.60,0.75,0.90,0.65,0.85])
 c_i=np.array([40,25,35,30,21,55,45,37,52,42])
@@ -42,3 +50,6 @@ for i in range(10):
     CR_i_new=(s+k-c_i_new)/(s+k-r)
 
     #Tabulation of new data
+    New_table=np.column_stack((Supplier,p_i_new,y_i_new,c_i_new,c_i_eff_new,CR_i_new,Exp_R_i_new,Var_R_i_new))
+    print(f"Instance number: {i+1}, Seed: {seeds[i]}, mu: {mu:.2f}, sigma: {sigma:.2f}, coefficient of variation: {v:.2f}")
+    print(New_table)
