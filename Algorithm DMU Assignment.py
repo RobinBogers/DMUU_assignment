@@ -7,24 +7,39 @@ Created on Wed Sep  9 15:07:59 2026
 import numpy as np
 from scipy.optimize import fsolve
 from scipy.stats import norm
-
+from itertools import product
 
 # Given number of suppliers: 10
 N = 10
 
 
-
+b_u = np.array(list(product([0, 1], repeat=N)))
 #stockout probabilities
-P_u = np.prod(b_u * p + (1 - b_u) * (1 - p), axis=1)
+P_u = np.prod(b_u * p_i + (1 - b_u) * (1 - p_i), axis=1)
 # implementing given parameters
 s = 45
 k = 15
-order = np.argsort(c_i, descending=False)
-CR_ordered = CR[order]
-y_ordered = y[order]
-p_ordered = p[order]
+#%%
+order = np.argsort(c_i, descending=False) 
+CR_ordered = CR_i[order] 
+y_ordered = y_i[order]
+p_ordered = p_i[order]
 b_ordered = b_u[:, order]
+#%%
+order = np.argsort(c_i_new, descending=False) 
+CR_ordered = CR_i_new[order] 
+y_ordered = y_i_new[order]
+p_ordered = p_i_new[order]
+b_ordered = b_u[:, order]
+#%% Test instance
+CR_i_2 = 0.99*np.ones(10)
 
+order = np.argsort(c_i_new, descending=False) 
+CR_ordered = CR_i_2[order] 
+y_ordered = y_i_new[order]
+p_ordered = p_i_new[order]
+b_ordered = b_u[:, order]
+#%%
 def optimalcond(Q, active):
     i = len(active)
     onesi = np.ones(i)
@@ -65,7 +80,7 @@ def kkt_inactivity(root, active, order):
     FQ_u = normal.cdf(Q_u)[:, None]
     P = P_u[:, None]
     return LHS - np.sum(P*(ones1024 - (b_ordered[:,(N-i):])*
-                           (onesi - y_ordered[(N-i):]))*FQ_u, axis = 0)
+                           (onesi - y_ordered[(N-i):]))*FQ_u, axis = 0), LHS
 
 order = list(order)  
 active = []
@@ -81,20 +96,27 @@ while order:
     accept_resid, accept_nonneg, nonneg = acceptor(root, active)
     if (accept_resid & accept_nonneg) == True:
         # valid solution --> check KKT conditions
-        diff = kkt_inactivity(root, active, order)
+        diff, test = kkt_inactivity(root, active, order)
+        print(test)
         for k in range(len(diff)):
             if diff[k] <= 0:
                 # LHS <= RHS --> Q_i = 0 for all i in the ordering after k
                 inactive.extend(order[k:])
                 order = order[:k]
+                print('I am over here')
                 break
             else:
                 # LHS > RHS --> Q_k is still potentially active
+                print('I am over there')
                 continue          
                 
     elif accept_nonneg == False:
         # if Q_i becomes 0 in the solution, then add to inactive
-        inactive.append(active[(-nonneg)])
-        break
+        inactive.extend(np.array(active)[(~nonneg)])
+        active = list(np.array(active)[nonneg])
+        print('I am over yonder')
+        continue
     elif accept_resid == False:
         print('Residuals imply solution does not adequately solve opt. conditions')
+        break
+
