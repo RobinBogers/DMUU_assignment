@@ -4,6 +4,7 @@ Created on Wed Sep  9 15:07:59 2026
 
 @author: maike
 """
+# Remember to distinguish the distributions of mu and sigma
 import numpy as np
 from scipy.optimize import fsolve
 from scipy.stats import norm
