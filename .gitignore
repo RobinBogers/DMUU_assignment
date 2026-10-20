@@ -1,0 +1,4 @@
+gurobi.lic
+gurobi.log
+.venv/
+__pycache__/
