@@ -1,0 +1,4 @@
+method,mean,var_of_mean,VR_pct
+plain,7383.5086,83.3202,0.0
+control variate,7384.1156,80.6681,3.1831
+antithetic,7384.5575,60.108,27.8591

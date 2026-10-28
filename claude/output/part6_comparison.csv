@@ -1,0 +1,4 @@
+model,active,total_Q,Q1,Q2,Q3,Q4,Q5,Q6,Q7,Q8,Q9,Q10,measure,value,E_profit_under_Normal,runtime_s
+Deterministic SLP,[5],401.24,0.0,0.0,0.0,0.0,401.24,0.0,0.0,0.0,0.0,0.0,Expected profit (D=mu),8339.92,6653.92,0.03
+Mean-MAD DRO-LP,[5],401.24,0.0,0.0,0.0,0.0,401.24,0.0,0.0,0.0,0.0,0.0,Worst-case profit,6533.72,6653.92,0.06
+Mean-variance Scarf SOCP,[5],502.86,0.0,0.0,0.0,0.0,502.86,0.0,0.0,0.0,0.0,0.0,Conservative worst-case bound,6772.05,7382.74,0.01
